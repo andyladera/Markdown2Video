@@ -1,0 +1,155 @@
+/* public/css/base_markdown.css */
+
+/* Estilos generales para la página (si no están en un main.css) */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    /* Importante para que 100vh funcione bien y no haya doble scrollbar innecesario */
+    overflow: hidden; 
+}
+
+/* Contenedor principal de la página del editor */
+.container {
+    display: flex;
+    /* Ocupar toda la altura visible MENOS la altura del header si el header no es 'fixed' o 'absolute'
+       Si tu header tiene, por ejemplo, 60px de alto: */
+    height: calc(100vh - 60px); /* AJUSTA 60px a la altura real de tu header */
+    /* Si el header está 'fixed' o 'absolute' y fuera del flujo, puedes usar height: 100vh;
+       y luego en el .container añadir padding-top: (altura del header); */
+    flex-direction: row;
+    /* overflow: hidden;  Quitado de aquí, se maneja en los hijos si es necesario */
+}
+
+/* Estilos del editor */
+.editor-container {
+    width: 50%; /* O flex: 1; */
+    background-color: #fff;
+    padding: 15px; /* Reducido un poco para más espacio al editor */
+    border-right: 1px solid #ccc; /* Más sutil */
+    display: flex;
+    flex-direction: column;
+    /* height: 100%; No es necesario si .container es flex y este es un hijo flex */
+    box-sizing: border-box;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* font-size: 24px; Quitado para que no sea tan grande */
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+.editor-header h2 { margin: 0; font-size: 1.2em; }
+
+.mode-selector {
+  font-size: 0.9em;
+  padding: 5px 8px;
+  border-radius: 4px;
+}
+
+.editor-body {
+    flex-grow: 1; /* Para que ocupe el espacio vertical restante */
+    position: relative; /* CodeMirror a veces necesita esto para posicionar sus elementos internos */
+    border: 1px solid #d1d1d1; /* Un borde sutil alrededor del área del editor */
+    border-radius: 4px;
+    overflow: hidden; /* Para que el scroll de CodeMirror funcione bien dentro de este div */
+}
+
+/* El textarea original donde se inicializa CodeMirror */
+/* CodeMirror lo ocultará, así que estos estilos son menos importantes */
+textarea.editor { 
+    width: 100%;
+    height: 100%; /* CodeMirror lo reemplazará, pero es bueno tenerlo */
+    box-sizing: border-box; /* Importante */
+    display: block; /* Ocultado por CodeMirror */
+}
+
+/* Estilos DIRECTOS para la instancia de CodeMirror */
+.CodeMirror {
+    height: 100%; /* ¡IMPORTANTE! Hacer que ocupe todo el alto de .editor-body */
+    font-family: monospace;
+    font-size: 14px; /* Ajusta según preferencia */
+}
+/* Ajustes para el gutter de los números de línea si es necesario */
+.CodeMirror-gutters {
+  background-color: #262626; /* Un color de fondo similar al tema dracula para el gutter */
+  border-right: 1px solid #444;
+}
+.CodeMirror-linenumber {
+  padding: 0 3px 0 5px;
+  color: #888; /* Color de los números de línea */
+}
+
+
+/* Estilos de la vista previa */
+.preview-container {
+    width: 50%; /* O flex: 1; */
+    padding: 15px;
+    background-color: #f9f9f9; /* Un fondo ligeramente diferente para distinguir */
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.preview-header {
+    /* font-size: 24px; */
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.preview-header h2 { margin: 0; font-size: 1.2em; }
+
+
+.preview-body {
+    flex-grow: 1;
+    background-color: #fff; /* Fondo blanco para el contenido de la preview */
+    border-radius: 4px;
+    padding: 15px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+}
+
+/* .ppt-preview ya no necesita tantos estilos si .preview-body los maneja */
+#ppt-preview {
+    /* height: 100%; No es necesario si .preview-body es flex-grow y tiene overflow */
+    line-height: 1.6;
+    /* white-space: pre-wrap; Marked.js ya maneja esto */
+}
+#ppt-preview > *:first-child {
+    margin-top: 0; /* Evitar doble margen superior */
+}
+
+
+/* Estilos para los botones */
+.button-container {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.generate-btn { /* Unificado para todos los botones de generación */
+    padding: 10px 15px;
+    background-color: #6b56f0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    /* width: 180px; /* Quitado para que se ajusten al contenido o usen flexbox */
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+.generate-btn:hover {
+    background-color: #5a48d1;
+}

@@ -1,0 +1,112 @@
+/* Estilos generales para el cuerpo */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: #6b56f0;
+    color: white;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    transition: 0.3s; /* Para animar el deslizamiento */
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.sidebar-brand {
+    font-size: 1.5em;
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar-menu ul {
+    list-style-type: none;
+}
+
+.sidebar-menu ul li {
+    margin: 15px 0;
+}
+
+.sidebar-menu ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-menu ul li a i {
+    margin-right: 10px;
+}
+
+/* Iconos */
+.icon-dashboard:before {
+    content: '\f015';
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+.icon-user:before {
+    content: '\f007';
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+.icon-settings:before {
+    content: '\f013';
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+.icon-logout:before {
+    content: '\f08b';
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+/* Botón de alternancia */
+.toggle-btn {
+    background-color: #6b56f0;
+    color: white;
+    font-size: 1.5em;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Main content */
+.main-content {
+    margin-left: 250px; /* Para que el contenido no quede debajo de la barra lateral */
+    padding: 20px;
+    flex-grow: 1;
+}
+
+/* Media Query para pantallas más pequeñas */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .main-content {
+        margin-left: 0; /* Para dispositivos móviles, el contenido ocupa todo el ancho */
+    }
+}

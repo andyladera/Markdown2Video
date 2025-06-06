@@ -1,0 +1,40 @@
+[2025-05-15 05:23:36] Error: Failed opening required 'C:\xampp\htdocs\Markdown2Video/Views/auth/registro.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Markdown2Video\src\Controllers\AuthController.php on line 91
+Stack trace:
+#0 C:\xampp\htdocs\Markdown2Video\index.php(98): Dales\Markdown2video\Controllers\AuthController->showRegisterForm()
+#1 {main}
+[2025-05-15 05:24:50] Error: Failed opening required 'C:\xampp\htdocs\Markdown2Video/Views/auth/registro.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Markdown2Video\src\Controllers\AuthController.php on line 91
+Stack trace:
+#0 C:\xampp\htdocs\Markdown2Video\index.php(98): Dales\Markdown2video\Controllers\AuthController->showRegisterForm()
+#1 {main}
+[2025-05-15 05:24:56] Error: Failed opening required 'C:\xampp\htdocs\Markdown2Video/Views/auth/registro.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Markdown2Video\src\Controllers\AuthController.php on line 91
+Stack trace:
+#0 C:\xampp\htdocs\Markdown2Video\index.php(98): Dales\Markdown2video\Controllers\AuthController->showRegisterForm()
+#1 {main}
+[2025-05-15 05:24:58] Error: Failed opening required 'C:\xampp\htdocs\Markdown2Video/Views/auth/registro.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Markdown2Video\src\Controllers\AuthController.php on line 91
+Stack trace:
+#0 C:\xampp\htdocs\Markdown2Video\index.php(98): Dales\Markdown2video\Controllers\AuthController->showRegisterForm()
+#1 {main}
+[2025-05-15 05:24:58] Error: Failed opening required 'C:\xampp\htdocs\Markdown2Video/Views/auth/registro.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Markdown2Video\src\Controllers\AuthController.php on line 91
+Stack trace:
+#0 C:\xampp\htdocs\Markdown2Video\index.php(98): Dales\Markdown2video\Controllers\AuthController->showRegisterForm()
+#1 {main}
+[2025-05-15 05:24:58] Error: Failed opening required 'C:\xampp\htdocs\Markdown2Video/Views/auth/registro.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Markdown2Video\src\Controllers\AuthController.php on line 91
+Stack trace:
+#0 C:\xampp\htdocs\Markdown2Video\index.php(98): Dales\Markdown2video\Controllers\AuthController->showRegisterForm()
+#1 {main}
+[2025-05-15 05:24:58] Error: Failed opening required 'C:\xampp\htdocs\Markdown2Video/Views/auth/registro.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Markdown2Video\src\Controllers\AuthController.php on line 91
+Stack trace:
+#0 C:\xampp\htdocs\Markdown2Video\index.php(98): Dales\Markdown2video\Controllers\AuthController->showRegisterForm()
+#1 {main}
+[2025-05-15 05:24:59] Error: Failed opening required 'C:\xampp\htdocs\Markdown2Video/Views/auth/registro.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Markdown2Video\src\Controllers\AuthController.php on line 91
+Stack trace:
+#0 C:\xampp\htdocs\Markdown2Video\index.php(98): Dales\Markdown2video\Controllers\AuthController->showRegisterForm()
+#1 {main}
+[2025-05-15 05:24:59] Error: Failed opening required 'C:\xampp\htdocs\Markdown2Video/Views/auth/registro.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Markdown2Video\src\Controllers\AuthController.php on line 91
+Stack trace:
+#0 C:\xampp\htdocs\Markdown2Video\index.php(98): Dales\Markdown2video\Controllers\AuthController->showRegisterForm()
+#1 {main}
+[2025-05-19 03:18:18] Error: Typed property Dales\Markdown2video\Config\Database::$port must not be accessed before initialization in C:\xampp\htdocs\Markdown2Video\src\Config\Database.php on line 66
+Stack trace:
+#0 C:\xampp\htdocs\Markdown2Video\index.php(89): Dales\Markdown2video\Config\Database->getConnection()
+#1 {main}

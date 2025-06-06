@@ -1,0 +1,193 @@
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #e8e3ff, #e8e3ff); /* Fondo morado suave */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    max-width: 1000px;
+    height: 60%; /* Ajusta el alto del contenedor */
+    border-radius: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    background-color: white;
+}
+
+.login-form {
+    background-color: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: center;*/
+    height: 100%;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    font-size: 2em;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    font-size: 1.1em;
+    color: #555;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 1em;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #6b56f0;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #6b56f0;
+}
+
+a {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #6b56f0;
+    font-size: 1.1em;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.social-login {
+    display: flex;
+    justify-content: space-between;
+}
+
+.social-login button {
+    width: 48%;
+    padding: 10px;
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.social-login button:hover {
+    background-color: #e6e6e6;
+}
+
+.google-login {
+    background-color: #db4437;
+    color: white;
+}
+
+.google-login:hover {
+    background-color: #c1351d;
+}
+
+.facebook-login {
+    background-color: #3b5998;
+    color: white;
+}
+
+.facebook-login:hover {
+    background-color: #2d4373;
+}
+
+/* Imagen del lado derecho */
+.login-image {
+    width: 50%; /* Ajuste el contenedor a la mitad del ancho */
+    background-color: #f0f0f0; /* Fondo suave */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-image img {
+    max-width: 60%; /* Reducir el tamaño de la imagen al 60% del contenedor */
+    max-height: 60%; /* Limitar la altura máxima */
+    object-fit: contain; /* Asegurarse de que la imagen mantenga su proporción */
+    border-radius: 20px;
+}
+
+/* Media Query para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+    .login-container {
+        flex-direction: column; /* Cambiar la disposición de fila a columna */
+        height: 85%;
+        padding: 10px;
+    }
+
+    .login-image {
+        display: none; /* Ocultar la imagen en pantallas pequeñas */
+    }
+
+    .login-form {
+        width: 100%; /* Se ajusta al 100% del contenedor */
+        padding: 20px; /* Menos padding */
+    }
+
+    h2 {
+        font-size: 1.8em; /* Reducir el tamaño del título */
+    }
+
+    button {
+        font-size: 1em; /* Reducir el tamaño del botón */
+    }
+
+    .input-group input {
+        font-size: 0.9em; /* Reducir el tamaño de los campos de texto */
+    }
+}
+
+/* Media Query para dispositivos más grandes (tablets, pantallas medianas) */
+@media screen and (max-width: 1024px) {
+    .login-container {
+        /*flex-direction: column; /* Cambiar la disposición de fila a columna */
+        /*justify-content: center;*/
+    }
+
+    .login-image {
+        display: block; /* La imagen se muestra en tablets */
+        width: 80%; /* Ajustar el tamaño de la imagen */
+    }
+
+    .login-form {
+        width: 100%;
+        max-width: 500px;
+        padding-top: 10%;
+    }
+}

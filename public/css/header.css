@@ -1,0 +1,84 @@
+/* Estilos generales para el header */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #6b56f0;
+    color: white;
+    padding: 10px 30px; /* Ajustar los márgenes laterales */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%; /* Extender al 100% del ancho */
+}
+
+/* Estilo para la parte izquierda del navbar */
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    max-width: 100%; /* Ajuste proporcional */
+    height: 40px; /* Ajustar tamaño del logo */
+    width: auto; /* Mantener la proporción */
+}
+
+/* Estilo para los iconos de usuario */
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.usuario-img {
+    width: 35px; /* Ajustar tamaño de la imagen del usuario */
+    height: 35px; /* Mantener proporción cuadrada */
+    border-radius: 50%; /* Imagen redondeada */
+    object-fit: cover; /* Cubrir el contenedor sin distorsionar */
+}
+
+/* Navbar derecha */
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+/* Media Queries para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar-left,
+    .navbar-right {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .navbar-item {
+        margin-right: 0;
+        font-size: 1.1em;
+    }
+
+    .logo-img {
+        height: 30px; /* Ajustar tamaño del logo en pantallas pequeñas */
+    }
+
+    .usuario-img {
+        width: 30px; /* Ajustar tamaño de la imagen del usuario en pantallas pequeñas */
+        height: 30px;
+    }
+}

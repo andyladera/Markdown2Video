@@ -1,0 +1,120 @@
+[12-May-2025 05:14:23 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\HomeController para URL ''
+[12-May-2025 05:14:23 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\HomeController para URL ''
+[12-May-2025 05:14:50 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\HomeController para URL ''
+[12-May-2025 05:27:22 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\HomeController para URL ''
+[12-May-2025 05:45:40 Europe/Berlin] Error de base de datos en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[12-May-2025 05:45:40 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\LoginController para URL 'login' (Segments: login)
+[12-May-2025 05:47:05 Europe/Berlin] Error de base de datos en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[12-May-2025 05:47:05 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\LoginController para URL 'login' (Segments: login)
+[12-May-2025 05:47:09 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\LoginController para URL 'login' (Segments: login)
+[12-May-2025 05:47:11 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\LoginController para URL 'login' (Segments: login)
+[12-May-2025 19:26:47 Europe/Berlin] Error de base de datos en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[12-May-2025 19:26:47 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\LoginController para URL 'login' (Segments: login)
+[12-May-2025 19:28:00 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\LoginController para URL 'login' (Segments: login)
+[12-May-2025 19:33:36 Europe/Berlin] Error de base de datos en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[12-May-2025 19:33:36 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\LoginController para URL 'login' (Segments: login)
+[12-May-2025 19:59:18 Europe/Berlin] Error de base de datos en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[12-May-2025 19:59:18 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\LoginController para URL 'login' (Segments: login)
+[12-May-2025 19:59:20 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\LoginController para URL 'login' (Segments: login)
+[12-May-2025 19:59:20 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\LoginController para URL 'login' (Segments: login)
+[12-May-2025 19:59:30 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\LoginController para URL 'login' (Segments: login)
+[12-May-2025 19:59:30 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\LoginController para URL 'login' (Segments: login)
+[12-May-2025 19:59:31 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\LoginController para URL 'login' (Segments: login)
+[12-May-2025 19:59:31 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\LoginController para URL 'login' (Segments: login)
+[12-May-2025 19:59:40 Europe/Berlin] Error de base de datos en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[12-May-2025 19:59:40 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\LoginController para URL 'login' (Segments: login)
+[12-May-2025 20:02:47 Europe/Berlin] Error de base de datos en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[12-May-2025 20:02:47 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\LoginController para URL 'login' (Segments: login)
+[12-May-2025 20:08:38 Europe/Berlin] Error de base de datos en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[12-May-2025 20:08:38 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\LoginController para URL 'login' (Segments: login)
+[12-May-2025 20:09:03 Europe/Berlin] Error de BD en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[12-May-2025 20:14:05 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\MarkdownController para URL 'markdown/create' (Segments: markdown,create)
+[12-May-2025 20:14:07 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\MarkdownController para URL 'markdown/history' (Segments: markdown,history)
+[13-May-2025 03:02:13 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\MarkdownController para URL 'markdown/history' (Segments: markdown,history)
+[13-May-2025 03:05:24 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\MarkdownController para URL 'markdown/history' (Segments: markdown,history)
+[13-May-2025 03:08:54 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\MarkdownController para URL 'markdown/history' (Segments: markdown,history)
+[13-May-2025 03:09:26 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\MarkdownController para URL 'markdown/history' (Segments: markdown,history)
+[13-May-2025 03:09:27 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\MarkdownController para URL 'markdown/history' (Segments: markdown,history)
+[13-May-2025 03:09:27 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\MarkdownController para URL 'markdown/history' (Segments: markdown,history)
+[13-May-2025 03:40:23 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\MarkdownController para URL 'markdown/create' (Segments: markdown,create)
+[13-May-2025 03:42:51 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\MarkdownController para URL 'markdown/create' (Segments: markdown,create)
+[13-May-2025 03:43:07 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\MarkdownController para URL 'markdown/create' (Segments: markdown,create)
+[13-May-2025 04:13:28 Europe/Berlin] Clase de controlador no encontrada: Dales\Markdown2video\Controllers\MarkdownController para URL 'markdown/create' (Segments: markdown,create)
+[13-May-2025 04:36:26 Europe/Berlin] Vista no encontrada: C:\xampp\htdocs\Markdown2Video/Views/markdown/editor.php
+[13-May-2025 04:36:31 Europe/Berlin] Vista no encontrada: C:\xampp\htdocs\Markdown2Video/Views/markdown/editor.php
+[13-May-2025 05:07:58 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\MarkdownController->< para URL 'markdown/<' (Segments: markdown,<)
+[13-May-2025 05:52:46 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\AuthController->showRegisterForm para URL 'auth/register' (Segments: ["auth","register"])
+[13-May-2025 05:57:50 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\MarkdownController->< para URL 'markdown/<' (Segments: ["markdown","<"])
+[15-May-2025 05:13:14 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\AuthController->showRegisterForm para URL 'auth/register' (Segments: ["auth","register"])
+[15-May-2025 05:25:48 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\AuthController->showRegisterForm para URL 'auth/register' (Segments: ["auth","register"])
+[15-May-2025 05:25:55 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\AuthController->showRegisterForm para URL 'auth/register' (Segments: ["auth","register"])
+[15-May-2025 05:29:50 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\AuthController->showRegisterForm para URL 'auth/register' (Segments: ["auth","register"])
+[15-May-2025 05:31:54 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\AuthController->showRegisterForm para URL 'auth/register' (Segments: ["auth","register"])
+[15-May-2025 05:32:01 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\AuthController->showRegisterForm para URL 'auth/register' (Segments: ["auth","register"])
+[15-May-2025 05:33:25 Europe/Berlin] Error al ejecutar controlador Dales\Markdown2video\Controllers\AuthController->showRegisterForm: Failed opening required 'C:\xampp\htdocs\Markdown2Video/Views/auth/registro.php' (include_path='C:\xampp\php\PEAR')
+Trace: #0 C:\xampp\htdocs\Markdown2Video\index.php(173): Dales\Markdown2video\Controllers\AuthController->showRegisterForm()
+#1 {main}
+[15-May-2025 05:33:29 Europe/Berlin] Error al ejecutar controlador Dales\Markdown2video\Controllers\AuthController->showRegisterForm: Failed opening required 'C:\xampp\htdocs\Markdown2Video/Views/auth/registro.php' (include_path='C:\xampp\php\PEAR')
+Trace: #0 C:\xampp\htdocs\Markdown2Video\index.php(173): Dales\Markdown2video\Controllers\AuthController->showRegisterForm()
+#1 {main}
+[15-May-2025 20:34:15 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\AuthController->processRegistration para URL 'auth/register' (Segments: ["auth","register"])
+[16-May-2025 03:17:24 Europe/Berlin] Error de conexión a la base de datos: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) (DSN: mysql:host=localhost;dbname=markdown2video;port=3306;charset=utf8mb4)
+[16-May-2025 03:17:24 Europe/Berlin] Error CRÍTICO al conectar con la base de datos: No se pudo conectar al servidor de datos. Por favor, inténtelo más tarde.
+Trace: #0 C:\xampp\htdocs\Markdown2Video\index.php(89): Dales\Markdown2video\Config\Database->getConnection()
+#1 {main}
+[16-May-2025 03:19:48 Europe/Berlin] Error de BD en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[16-May-2025 03:20:09 Europe/Berlin] Error de BD en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[16-May-2025 03:21:48 Europe/Berlin] Error de BD en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[16-May-2025 03:22:01 Europe/Berlin] Error de BD en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[16-May-2025 03:22:17 Europe/Berlin] Error de BD en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[16-May-2025 03:22:24 Europe/Berlin] Error de BD en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[16-May-2025 03:22:32 Europe/Berlin] Error de BD en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[16-May-2025 03:23:01 Europe/Berlin] Error de BD en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[16-May-2025 03:23:08 Europe/Berlin] Error de BD en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[16-May-2025 03:24:23 Europe/Berlin] Error de BD en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[16-May-2025 03:24:27 Europe/Berlin] Error de BD en AuthController::processLogin: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'password_hash' in 'field list'
+[18-May-2025 21:45:43 Europe/Berlin] Error de conexión a la base de datos: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it (DSN: mysql:host=localhost;dbname=markdown2video;port=3307;charset=utf8mb4)
+[18-May-2025 21:45:43 Europe/Berlin] Error CRÍTICO al conectar con la base de datos: No se pudo conectar al servidor de datos. Por favor, inténtelo más tarde.
+Trace: #0 C:\xampp\htdocs\Markdown2Video\index.php(89): Dales\Markdown2video\Config\Database->getConnection()
+#1 {main}
+[18-May-2025 21:45:47 Europe/Berlin] Error de conexión a la base de datos: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it (DSN: mysql:host=localhost;dbname=markdown2video;port=3307;charset=utf8mb4)
+[18-May-2025 21:45:47 Europe/Berlin] Error CRÍTICO al conectar con la base de datos: No se pudo conectar al servidor de datos. Por favor, inténtelo más tarde.
+Trace: #0 C:\xampp\htdocs\Markdown2Video\index.php(89): Dales\Markdown2video\Config\Database->getConnection()
+#1 {main}
+[18-May-2025 21:45:56 Europe/Berlin] Error de conexión a la base de datos: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it (DSN: mysql:host=localhost;dbname=markdown2video;port=3307;charset=utf8mb4)
+[18-May-2025 21:45:56 Europe/Berlin] Error CRÍTICO al conectar con la base de datos: No se pudo conectar al servidor de datos. Por favor, inténtelo más tarde.
+Trace: #0 C:\xampp\htdocs\Markdown2Video\index.php(89): Dales\Markdown2video\Config\Database->getConnection()
+#1 {main}
+[18-May-2025 21:46:00 Europe/Berlin] Error de conexión a la base de datos: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it (DSN: mysql:host=localhost;dbname=markdown2video;port=3307;charset=utf8mb4)
+[18-May-2025 21:46:00 Europe/Berlin] Error CRÍTICO al conectar con la base de datos: No se pudo conectar al servidor de datos. Por favor, inténtelo más tarde.
+Trace: #0 C:\xampp\htdocs\Markdown2Video\index.php(89): Dales\Markdown2video\Config\Database->getConnection()
+#1 {main}
+[18-May-2025 21:46:06 Europe/Berlin] Error de conexión a la base de datos: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it (DSN: mysql:host=localhost;dbname=markdown2video;port=3307;charset=utf8mb4)
+[18-May-2025 21:46:06 Europe/Berlin] Error CRÍTICO al conectar con la base de datos: No se pudo conectar al servidor de datos. Por favor, inténtelo más tarde.
+Trace: #0 C:\xampp\htdocs\Markdown2Video\index.php(89): Dales\Markdown2video\Config\Database->getConnection()
+#1 {main}
+[18-May-2025 21:46:42 Europe/Berlin] Error de conexión a la base de datos: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it (DSN: mysql:host=localhost;dbname=markdown2video;port=3307;charset=utf8mb4)
+[18-May-2025 21:46:42 Europe/Berlin] Error CRÍTICO al conectar con la base de datos: No se pudo conectar al servidor de datos. Por favor, inténtelo más tarde.
+Trace: #0 C:\xampp\htdocs\Markdown2Video\index.php(89): Dales\Markdown2video\Config\Database->getConnection()
+#1 {main}
+[18-May-2025 21:46:49 Europe/Berlin] Error de conexión a la base de datos: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it (DSN: mysql:host=localhost;dbname=markdown2video;port=3307;charset=utf8mb4)
+[18-May-2025 21:46:49 Europe/Berlin] Error CRÍTICO al conectar con la base de datos: No se pudo conectar al servidor de datos. Por favor, inténtelo más tarde.
+Trace: #0 C:\xampp\htdocs\Markdown2Video\index.php(89): Dales\Markdown2video\Config\Database->getConnection()
+#1 {main}
+[19-May-2025 03:45:41 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\MarkdownController->< para URL 'markdown/<' (Segments: ["markdown","<"])
+[19-May-2025 03:45:54 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\MarkdownController->< para URL 'markdown/<' (Segments: ["markdown","<"])
+[19-May-2025 03:53:40 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\MarkdownController->< para URL 'markdown/<' (Segments: ["markdown","<"])
+[19-May-2025 03:53:44 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\MarkdownController->< para URL 'markdown/<' (Segments: ["markdown","<"])
+[19-May-2025 03:56:53 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\MarkdownController->< para URL 'markdown/<' (Segments: ["markdown","<"])
+[19-May-2025 03:57:45 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\MarkdownController->< para URL 'markdown/<' (Segments: ["markdown","<"])
+[30-May-2025 09:05:40 Europe/Berlin] Controller Error: Dales\Markdown2video\Controllers\MarkdownController->showPdfDownloadPage: Failed opening required 'C:\xampp\htdocs\Markdown2Video/Views/markdown/download_pdf.php' (include_path='C:\xampp\php\PEAR')
+Trace: #0 C:\xampp\htdocs\Markdown2Video\index.php(125): Dales\Markdown2video\Controllers\MarkdownController->showPdfDownloadPage('md_18CA.tmp.pdf')
+#1 {main}
+[30-May-2025 09:34:15 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\MarkdownController->generatePdfFromHtml para URL 'markdown/generate-pdf-from-html' (Segments: ["markdown","generate-pdf-from-html"])
+[30-May-2025 19:50:50 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\MarkdownController->generatePdfFromHtml para URL 'markdown/generate-pdf-from-html' (Segments: ["markdown","generate-pdf-from-html"])
+[30-May-2025 19:54:01 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\MarkdownController->generatePdfFromHtml para URL 'markdown/generate-pdf-from-html' (Segments: ["markdown","generate-pdf-from-html"])
+[30-May-2025 19:54:11 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\MarkdownController->generatePdfFromHtml para URL 'markdown/generate-pdf-from-html' (Segments: ["markdown","generate-pdf-from-html"])
+[30-May-2025 20:01:39 Europe/Berlin] Método no encontrado: Dales\Markdown2video\Controllers\MarkdownController->generatePdfFromHtml para URL 'markdown/generate-pdf-from-html' (Segments: ["markdown","generate-pdf-from-html"])
+[30-May-2025 20:04:12 Europe/Berlin] Error al ejecutar controlador Dales\Markdown2video\Controllers\MarkdownController->showPdfDownloadPage: Failed opening required 'C:\xampp\htdocs\Markdown2Video/Views/markdown/download_pdf.php' (include_path='C:\xampp\php\PEAR')
+Trace: #0 C:\xampp\htdocs\Markdown2Video\index.php(186): Dales\Markdown2video\Controllers\MarkdownController->showPdfDownloadPage('preview_md_1748...')
+#1 {main}

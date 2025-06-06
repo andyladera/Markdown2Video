@@ -1,0 +1,128 @@
+/* Estilos generales para la página */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+/* Contenedor principal del dashboard */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+    background-color: #fff;
+}
+
+/* Botón Crear + */
+.historical-btn {
+    margin-bottom: 20px;
+}
+
+.btn-historical {
+    background-color: #6b56f0;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-historical:hover {
+    background-color: #5e46e7;
+}
+
+.btn-historical:focus {
+    outline: none;
+}
+
+/* Contenido del dashboard */
+.dashboard-content {
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.historical {
+    margin-bottom: 20px;
+}
+
+.historical h3 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.historical-content {
+    background-color: #eaeaea;
+    padding: 20px;
+    border-radius: 8px;
+    color: #555;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Agregar sombras y bordes para una mejor visibilidad */
+.dashboard-content,
+.historical-content {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+}
+
+header .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+header .navbar .navbar-left img {
+    height: 40px;
+    object-fit: cover;
+}
+
+header .navbar .navbar-right .user-profile img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Responsividad */
+@media screen and (max-width: 768px) {
+    .dashboard-container {
+        padding: 15px;
+    }
+
+    .btn-historical {
+        width: 100%;
+        font-size: 18px;
+    }
+
+    .dashboard-content {
+        margin-top: 15px;
+    }
+
+    header .navbar {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    header .navbar-left,
+    header .navbar-right {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .historical-content {
+        font-size: 14px;
+    }
+}
