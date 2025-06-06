@@ -187,4 +187,93 @@ class MarkdownController {
     }
 
     private function showErrorPage(string $logMessage, string $userMessage = "Error."): void { /* ... */ }
+
+    public function generateMarpFile(): void {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405); // Method Not Allowed
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => 'Método no permitido. Se esperaba POST.']);
+            exit;
+        }
+
+        $markdownContent = $_POST['markdown'] ?? null;
+        $format = $_POST['format'] ?? null;
+
+        if (empty($markdownContent) || empty($format)) {
+            http_response_code(400); // Bad Request
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => 'Faltan datos: markdown o formato.']);
+            exit;
+        }
+
+        // Por ahora, solo implementamos PDF. Otros formatos se pueden añadir después.
+        if ($format !== 'pdf') {
+            http_response_code(400);
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => "Formato '{$format}' no soportado actualmente para la generación Marp."]);
+            exit;
+        }
+
+        // Preparar para llamar al script de renderizado/generación de Marp
+        // Este script necesitará ser adaptado para manejar diferentes formatos y devolver la ruta del archivo.
+        $renderScriptPath = ROOT_PATH . '/server/render_marp.php';
+        if (!file_exists($renderScriptPath)) {
+            error_log("Script render_marp.php no encontrado: " . $renderScriptPath);
+            http_response_code(500);
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => 'Error interno del servidor (script de generación no encontrado).']);
+            exit;
+        }
+
+        // Crear un nombre de archivo único para el PDF
+        $userIdForPath = $_SESSION['user_id'] ?? 'guest_' . substr(session_id(), 0, 8);
+        $outputDir = ROOT_PATH . '/public/temp_files/pdfs/' . $userIdForPath;
+        if (!is_dir($outputDir)) {
+            if (!mkdir($outputDir, 0775, true) && !is_dir($outputDir)) {
+                error_log("No se pudo crear el directorio temporal para PDFs Marp: " . $outputDir);
+                http_response_code(500);
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'error' => 'Error interno al crear directorio temporal.']);
+                exit;
+            }
+        }
+
+        $pdfFileName = 'marp_presentation_' . time() . '_' . bin2hex(random_bytes(4)) . '.pdf';
+        $outputPdfFile = $outputDir . '/' . $pdfFileName;
+
+        // Pasar datos al script render_marp.php. Podríamos usar variables de entorno o POST simulado si el script es un endpoint.
+        // Por simplicidad, si render_marp.php es un script PHP que podemos incluir y que usa variables globales:
+        $_MARP_MARKDOWN_CONTENT = $markdownContent;
+        $_MARP_OUTPUT_FORMAT = $format; // 'pdf'
+        $_MARP_OUTPUT_FILE_PATH = $outputPdfFile;
+
+        ob_start();
+        include $renderScriptPath; // Este script debería generar el archivo en $_MARP_OUTPUT_FILE_PATH
+        $scriptOutput = ob_get_clean(); // Capturar cualquier salida del script (debería ser JSON o nada)
+
+        unset($_MARP_MARKDOWN_CONTENT, $_MARP_OUTPUT_FORMAT, $_MARP_OUTPUT_FILE_PATH); // Limpiar variables globales
+
+        // El script render_marp.php debería indicar éxito o error.
+        // Asumimos que si el archivo PDF existe, fue exitoso.
+        // Una mejor implementación sería que render_marp.php devuelva JSON.
+        if (file_exists($outputPdfFile) && filesize($outputPdfFile) > 0) {
+            $_SESSION['pdf_download_file'] = $pdfFileName;
+            $_SESSION['pdf_download_full_path'] = $outputPdfFile;
+
+            header('Content-Type: application/json');
+            echo json_encode([
+                'success' => true,
+                'message' => 'Archivo PDF generado desde Marp con éxito.',
+                'downloadPageUrl' => '/markdown/download-page/' . urlencode($pdfFileName)
+            ]);
+            exit;
+        } else {
+            error_log("render_marp.php no generó el archivo PDF esperado o el archivo está vacío. Ruta: {$outputPdfFile}. Salida del script: {$scriptOutput}");
+            if (file_exists($outputPdfFile)) unlink($outputPdfFile); // Limpiar archivo vacío si existe
+            http_response_code(500);
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => 'Error al generar el archivo PDF desde Marp.', 'debug_script_output' => (ENVIRONMENT === 'development' ? $scriptOutput : null)]);
+            exit;
+        }
+    }
 }
