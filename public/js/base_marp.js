@@ -135,7 +135,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const originalButtonText = this.textContent; // Guardar para restaurar
 
             try {
-                const generateEndpoint = `${baseUrl}/markdown/generate-marp-file`; // Nuevo endpoint
+                                let generateEndpoint;
+                if (format === 'mp4') {
+                    generateEndpoint = `${baseUrl}/markdown/generate-video-from-marp`;
+                } else {
+                    generateEndpoint = `${baseUrl}/markdown/generate-marp-file`;
+                }
                 const requestBody = new FormData();
                 requestBody.append('markdown', markdownContent);
                 requestBody.append('format', format);
