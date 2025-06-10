@@ -161,6 +161,8 @@ if ($controllerClassName === 'Dales\\Markdown2video\\Controllers\\AuthController
         $methodToCall = 'forceDownloadPdf'; 
     } elseif ($actionName === 'generate-marp-file' && $_SERVER['REQUEST_METHOD'] === 'POST') { // Nueva ruta para Marp
         $methodToCall = 'generateMarpFile';
+    } elseif ($actionName === 'generate-video-from-marp' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+        $methodToCall = 'generateVideoFromMarp';
     }
 }
 

@@ -276,4 +276,10 @@ class MarkdownController {
             exit;
         }
     }
+
+    public function generateVideoFromMarp(): void {
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'message' => 'Ruta de video alcanzada correctamente.']);
+        exit;
+    }
 }
