@@ -279,7 +279,95 @@ class MarkdownController {
 
     public function generateVideoFromMarp(): void {
         header('Content-Type: application/json');
-        echo json_encode(['success' => true, 'message' => 'Ruta de video alcanzada correctamente.']);
+
+        $markdownContent = $_POST['markdown'] ?? null;
+        if (empty($markdownContent)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'Falta contenido markdown.']);
+            exit;
+        }
+
+        // 1. Crear un directorio temporal único
+        $userIdForPath = $_SESSION['user_id'] ?? 'guest_' . substr(session_id(), 0, 8);
+        $uniqueJobId = time() . '_' . bin2hex(random_bytes(4));
+        $tempDir = ROOT_PATH . '/public/temp_files/videos/' . $userIdForPath . '/' . $uniqueJobId;
+
+        if (!is_dir($tempDir) && !mkdir($tempDir, 0775, true)) {
+            error_log("No se pudo crear el directorio temporal para el video: " . $tempDir);
+            http_response_code(500);
+            echo json_encode(['success' => false, 'error' => 'Error interno al crear directorio temporal.']);
+            exit;
+        }
+
+        // 2. Guardar el Markdown en un archivo temporal
+        $markdownFilePath = $tempDir . '/input.md';
+        if (file_put_contents($markdownFilePath, $markdownContent) === false) {
+            error_log("No se pudo escribir el archivo markdown temporal en: " . $markdownFilePath);
+            http_response_code(500);
+            echo json_encode(['success' => false, 'error' => 'Error interno al guardar el archivo markdown.']);
+            exit;
+        }
+
+        // 3. Ejecutar Marp CLI para generar las imágenes
+        $marpCliPath = ROOT_PATH . '/node_modules/.bin/marp';
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $marpCliPath .= '.cmd'; // En Windows, se usa el script .cmd
+        }
+
+
+        
+        // Guardar el directorio actual y cambiar al temporal para que Marp funcione de forma predecible
+        $original_cwd = getcwd();
+        chdir($tempDir);
+
+        // El nombre del archivo de entrada ahora es relativo al directorio temporal
+        $markdownFileName = 'input.md'; 
+        $escapedMarkdownFile = escapeshellarg($markdownFileName);
+
+        // Comando simplificado: Marp usará el CWD (que es $tempDir) para la salida
+        // Generará input.html, input.001.png, input.002.png, etc.
+        $command = escapeshellarg($marpCliPath) . " --html --images png {$escapedMarkdownFile}";
+
+        $exec_output = null;
+        $exec_return_code = null;
+        exec($command . ' 2>&1', $exec_output, $exec_return_code);
+
+        // Restaurar el directorio de trabajo original
+        chdir($original_cwd);
+
+        // 4. Comprobar si el comando tuvo éxito
+        if ($exec_return_code !== 0) {
+            error_log("Marp CLI falló con código {$exec_return_code}. Comando: {$command}. Salida: " . implode("\n", $exec_output));
+            http_response_code(500);
+            echo json_encode([
+                'success' => false, 
+                'error' => 'Error al convertir diapositivas a imágenes.',
+                'debug' => (ENVIRONMENT === 'development' ? $exec_output : null)
+            ]);
+            exit;
+        }
+
+        // 5. Contar las imágenes generadas para verificar
+        $imageFiles = glob($tempDir . '/*.png');
+        $imageCount = count($imageFiles);
+
+        if ($imageCount === 0) {
+            error_log("Marp CLI se ejecutó pero no se encontraron imágenes PNG en {$tempDir}. Salida: " . implode("\n", $exec_output));
+            http_response_code(500);
+            echo json_encode([
+                'success' => false, 
+                'error' => 'La conversión se completó pero no se generaron imágenes.',
+                'debug' => (ENVIRONMENT === 'development' ? $exec_output : null)
+            ]);
+            exit;
+        }
+
+        // Por ahora, solo devolvemos éxito y la cantidad de imágenes
+        echo json_encode([
+            'success' => true, 
+            'message' => "Paso 3 completado: Se generaron {$imageCount} imágenes.",
+            'image_path' => str_replace(ROOT_PATH, '', $tempDir) // Ruta relativa para información
+        ]);
         exit;
     }
 }
