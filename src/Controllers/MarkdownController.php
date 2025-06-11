@@ -348,11 +348,15 @@ class MarkdownController {
         }
 
         // 5. Contar las imágenes generadas para verificar
-        $imageFiles = glob($tempDir . '/*.png');
+        // Es necesario limpiar la caché de estado de los archivos, ya que los PNG fueron creados
+        // por un proceso externo (Marp CLI) y PHP podría no "verlos" inmediatamente.
+        clearstatcache();
+        $imageFiles = glob('*.png'); // Usamos ruta relativa porque estamos dentro de $tempDir
         $imageCount = count($imageFiles);
 
         if ($imageCount === 0) {
-            error_log("Marp CLI se ejecutó pero no se encontraron imágenes PNG en {$tempDir}. Salida: " . implode("\n", $exec_output));
+            error_log("Marp CLI se ejecutó pero no se encontraron imágenes PNG en " . getcwd() . ". Salida: " . implode("\n", $exec_output));
+            chdir($original_cwd); // Restaurar CWD en caso de error
             http_response_code(500);
             echo json_encode([
                 'success' => false, 
@@ -362,11 +366,59 @@ class MarkdownController {
             exit;
         }
 
-        // Por ahora, solo devolvemos éxito y la cantidad de imágenes
+        // 6. Unir las imágenes con FFmpeg - Estrategia robusta con 'concat'
+        $videoFileName = 'video_' . $uniqueJobId . '.mp4';
+        $listFileName = 'files.txt';
+
+        // Ordenar los archivos de imagen naturalmente para asegurar el orden correcto (001, 002, ... 010)
+        sort($imageFiles, SORT_NATURAL);
+
+        $listFileContent = '';
+        foreach ($imageFiles as $fileName) {
+            // El archivo de lista necesita la palabra clave 'file' y el nombre del archivo entre comillas simples.
+            $listFileContent .= "file '" . $fileName . "'\n";
+        }
+
+        if (file_put_contents($listFileName, $listFileContent) === false) {
+            error_log("No se pudo escribir el archivo de lista de FFmpeg en: " . $tempDir . '/' . $listFileName);
+            chdir($original_cwd);
+            http_response_code(500);
+            echo json_encode(['success' => false, 'error' => 'Error interno al preparar la lista de video.']);
+            exit;
+        }
+
+        // Comando FFmpeg usando el demuxer concat
+        // -f concat: lee una lista de archivos
+        // -safe 0: necesario para usar rutas relativas/simples en el archivo de lista
+        // -r 1/3: procesa 1 archivo de la lista cada 3 segundos (establece la duración de cada imagen)
+        // -c:v libx264 -r 30 -pix_fmt yuv420p: opciones de video estándar para máxima compatibilidad
+        $ffmpeg_command = "ffmpeg -f concat -safe 0 -r 1/3 -i " . escapeshellarg($listFileName) . " -c:v libx264 -r 30 -pix_fmt yuv420p " . escapeshellarg($videoFileName);
+
+        $ffmpeg_output = null;
+        $ffmpeg_return_code = null;
+        // La ejecución ocurre dentro de $tempDir
+        exec($ffmpeg_command . ' 2>&1', $ffmpeg_output, $ffmpeg_return_code);
+
+        // Restaurar el directorio de trabajo original
+        chdir($original_cwd);
+
+        if ($ffmpeg_return_code !== 0) {
+            error_log("FFmpeg (concat) falló con código {$ffmpeg_return_code}. Comando: {$ffmpeg_command}. Salida: " . implode("\n", $ffmpeg_output));
+            http_response_code(500);
+            echo json_encode([
+                'success' => false, 
+                'error' => 'Error al crear el archivo de video desde las imágenes (método concat).',
+                'debug' => (ENVIRONMENT === 'development' ? $ffmpeg_output : null)
+            ]);
+            exit;
+        }
+
+        // 7. Responder con éxito
+        $outputVideoPath = $tempDir . '/' . $videoFileName;
         echo json_encode([
-            'success' => true, 
-            'message' => "Paso 3 completado: Se generaron {$imageCount} imágenes.",
-            'image_path' => str_replace(ROOT_PATH, '', $tempDir) // Ruta relativa para información
+            'success' => true,
+            'message' => '¡Video MP4 generado con éxito!',
+            'video_url' => str_replace(str_replace('\\', '/', ROOT_PATH), BASE_URL, str_replace('\\', '/', $outputVideoPath))
         ]);
         exit;
     }
