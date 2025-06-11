@@ -424,18 +424,25 @@ class MarkdownController {
 
         // 9. Devolver la URL del video si se creó correctamente
         if (file_exists($videoPath)) {
-            // Limpiar las imágenes PNG que ya no necesitamos
-            foreach ($imageFiles as $file) {
-                unlink($file);
-            }
-            // Limpiar el archivo markdown temporal
-            unlink($markdownFilePath);
+            // 10. Guardar información del video en la sesión para la página de descarga
+            $_SESSION['video_info'] = [
+                'url' => str_replace(ROOT_PATH, '', $videoPath), // URL relativa para el navegador
+                'filename' => 'video_' . date('Ymd_His') . '.mp4',
+                'path' => $videoPath // Ruta absoluta para limpieza futura si es necesario
+            ];
 
+            // Limpiar las imágenes PNG y el archivo markdown temporal
+            foreach ($imageFiles as $file) {
+                if (file_exists($file)) unlink($file);
+            }
+            if (file_exists($markdownFilePath)) unlink($markdownFilePath);
+
+            // 11. Devolver una respuesta JSON con la URL de redirección
             echo json_encode([
                 'success' => true,
-                'message' => '¡Video generado con éxito!',
-                'videoUrl' => str_replace(ROOT_PATH, '', $videoPath) // Ruta relativa para el frontend
+                'redirectUrl' => '/markdown/download-video' // La nueva ruta que crearemos
             ]);
+
         } else {
             error_log("El video no fue encontrado en la ruta esperada después de la ejecución de FFmpeg: " . $videoPath);
             http_response_code(500);
@@ -443,5 +450,11 @@ class MarkdownController {
         }
 
         exit;
+    }
+
+    public function showDownloadVideoPage()
+    {
+        // La vista 'download_video.php' se encarga de verificar la sesión y obtener los datos.
+        require_once ROOT_PATH . '/Views/download_video.php';
     }
 }
