@@ -191,84 +191,7 @@ class MarkdownController {
         } else { exit; }
     }
 
-    public function showVideoDownloadPage(): void {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        if (!isset($_SESSION['user_id'])) {
-            header('Location: ' . $this->getBaseUrl() . '/auth/login');
-            exit;
-        }
-
-        if (!isset($_SESSION['download_video_path']) || !isset($_SESSION['download_video_filename'])) {
-            // Redirigir si no hay información del video, quizás a la página de Marp o a un error
-            error_log('Intento de acceso a showVideoDownloadPage sin datos de video en sesión.');
-            header('Location: ' . $this->getBaseUrl() . '/marp/editor?error=novideodata');
-            exit;
-        }
-
-        $data = [
-            'base_url' => $this->getBaseUrl(),
-            'pageTitle' => 'Descargar Video MP4',
-            'downloadLink' => $this->getBaseUrl() . '/markdown/download-video',
-            'actual_filename' => $_SESSION['download_video_filename']
-        ];
-
-        // Limpiar la sesión después de obtener los datos para evitar descargas repetidas de la misma info
-        // unset($_SESSION['download_video_path']);
-        // unset($_SESSION['download_video_filename']);
-        // Considerar si limpiar aquí o después de la descarga efectiva en downloadVideo()
-
-        $this->renderView('download_video', $data);
-    }
-
-    public function downloadVideo(): void {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        if (!isset($_SESSION['user_id'])) {
-            // Idealmente, esto no debería suceder si la página de descarga requiere login
-            http_response_code(403);
-            echo "Acceso denegado.";
-            exit;
-        }
-
-        if (!isset($_SESSION['download_video_path']) || !file_exists($_SESSION['download_video_path'])) {
-            http_response_code(404);
-            echo "Archivo no encontrado o enlace caducado.";
-            // Limpiar por si acaso, aunque file_exists ya falló
-            unset($_SESSION['download_video_path']);
-            unset($_SESSION['download_video_filename']);
-            exit;
-        }
-
-        $filePath = $_SESSION['download_video_path'];
-        $fileName = $_SESSION['download_video_filename'] ?? basename($filePath);
-
-        // Limpiar la sesión DESPUÉS de obtener las variables y ANTES de enviar headers
-        unset($_SESSION['download_video_path']);
-        unset($_SESSION['download_video_filename']);
-
-        header('Content-Description: File Transfer');
-        header('Content-Type: video/mp4');
-        header('Content-Disposition: attachment; filename="' . $fileName . '"');
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate');
-        header('Pragma: public');
-        header('Content-Length: ' . filesize($filePath));
-        
-        // Limpiar el buffer de salida antes de leer el archivo
-        if (ob_get_level()) {
-            ob_end_clean();
-        }
-        
-        readfile($filePath);
-        // No eliminar el archivo aquí, podría haber otros procesos o el usuario podría querer re-descargar desde la página si no limpiamos sesión antes.
-        // unlink($filePath); 
-        exit;
-    }
+    private function showErrorPage(string $logMessage, string $userMessage = "Error."): void { /* ... */ }
 
     public function generateMarpFile(): void {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -393,108 +316,94 @@ class MarkdownController {
         // 3. Ejecutar Marp CLI para generar las imágenes
         $marpCliPath = ROOT_PATH . '/node_modules/.bin/marp';
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            $marpCliPath .= '.cmd';
+            $marpCliPath .= '.cmd'; // En Windows, se usa el script .cmd
         }
 
+        // Guardar el directorio actual y cambiar al temporal para que Marp funcione de forma predecible
         $original_cwd = getcwd();
         chdir($tempDir);
-        $command = escapeshellcmd($marpCliPath) . ' --images png ' . escapeshellarg(basename($markdownFilePath)) . ' --html';
-        exec($command, $output, $return_var);
+
+        // El nombre del archivo de entrada ahora es relativo al directorio temporal
+        $markdownFileName = 'input.md'; 
+        $escapedMarkdownFile = escapeshellarg($markdownFileName);
+
+        // Comando simplificado: Marp usará el CWD (que es $tempDir) para la salida
+        // Generará input.html, input.001.png, input.002.png, etc.
+        $command = escapeshellarg($marpCliPath) . " --html --images png {$escapedMarkdownFile}";
+
+        $exec_output = null;
+        $exec_return_code = null;
+        exec($command . ' 2>&1', $exec_output, $exec_return_code);
+
+        // Restaurar el directorio de trabajo original
         chdir($original_cwd);
 
-        $imageFiles = glob($tempDir . '/*.png');
-        if ($return_var !== 0 || empty($imageFiles)) {
-            error_log("Marp CLI falló (código: {$return_var}). Salida: " . implode('\n', $output));
+        // 4. Comprobar si el comando tuvo éxito
+        if ($exec_return_code !== 0) {
+            error_log("Marp CLI falló con código {$exec_return_code}. Comando: {$command}. Salida: " . implode("\n", $exec_output));
             http_response_code(500);
-            echo json_encode(['success' => false, 'error' => 'Error al generar las diapositivas para el video.', 'debug' => $output]);
+            echo json_encode([
+                'success' => false, 
+                'error' => 'Error al convertir diapositivas a imágenes.',
+                'debug' => (ENVIRONMENT === 'development' ? $exec_output : null)
+            ]);
             exit;
         }
 
-        // 4. Configurar FFmpeg
-        $logFile = sys_get_temp_dir() . '/ffmpeg-' . $uniqueJobId . '.log';
+        // 5. Contar las imágenes generadas para verificar
+        $imageFiles = glob($tempDir . '/*.png');
+        $imageCount = count($imageFiles);
+
+        if ($imageCount === 0) {
+            error_log("Marp CLI se ejecutó pero no se encontraron imágenes PNG en {$tempDir}. Salida: " . implode("\n", $exec_output));
+            http_response_code(500);
+            echo json_encode([
+                'success' => false, 
+                'error' => 'La conversión se completó pero no se generaron imágenes.',
+                'debug' => (ENVIRONMENT === 'development' ? $exec_output : null)
+            ]);
+            exit;
+        }
+
+        // 6. Configurar el logger para FFmpeg
+        // Usar el directorio temporal del sistema para evitar problemas de permisos.
+        $logFile = sys_get_temp_dir() . '/ffmpeg.log';
+        // Limpiar el log anterior en cada ejecución para tener información fresca.
+        if (file_exists($logFile)) { unlink($logFile); }
         $logger = new Logger('ffmpeg');
         $logger->pushHandler(new StreamHandler($logFile, Logger::DEBUG));
 
+        // 7. Instanciar FFmpeg con las rutas y el logger
         $ffmpeg = FFMpeg::create([
             'ffmpeg.binaries'  => 'C:/ffmpeg/bin/ffmpeg.exe',
             'ffprobe.binaries' => 'C:/ffmpeg/bin/ffprobe.exe',
-            'timeout'          => 3600,
-            'ffmpeg.threads'   => 12,
+            'timeout'          => 3600, // Tiempo máximo de espera para el proceso
+            'ffmpeg.threads'   => 12,   // Hilos a usar por FFMpeg
         ], $logger);
 
+        // 8. Preparar para la creación del video
         $videoPath = $tempDir . '/output.mp4';
-        $durationPerSlide = 3;
+        $durationPerSlide = 3; // 3 segundos por diapositiva
         $inputFramerate = 1 / $durationPerSlide;
+
+        // El patrón de las imágenes generadas por Marp es 'input.001.png', etc.
         $imagePattern = $tempDir . '/input.%03d.png';
 
         try {
+            // La API de alto nivel de php-ffmpeg (open, openAdvanced) tiene problemas para establecer
+            // el framerate de entrada para secuencias de imágenes, que es la única forma de controlar
+            // la duración de cada diapositiva.
+            // La solución más robusta es usar el 'driver' de bajo nivel para construir y ejecutar
+            // el comando de FFmpeg directamente, dándonos control total sobre los parámetros.
+
             $ffmpeg->getFFMpegDriver()->command([
-                '-framerate', strval($inputFramerate),
-                '-i', $imagePattern,
-                '-c:v', 'libx264',
-                '-r', '25',
-                '-pix_fmt', 'yuv420p',
-                $videoPath
+                '-framerate', strval($inputFramerate), // Opción de ENTRADA: duración de cada imagen
+                '-i', $imagePattern,                   // Archivos de entrada
+                '-c:v', 'libx264',                     // Codec de video
+                '-r', '25',                            // Opción de SALIDA: framerate del video final
+                '-pix_fmt', 'yuv420p',                 // Formato de píxeles para máxima compatibilidad
+                $videoPath                             // Archivo de salida
             ]);
-
-            if (file_exists($videoPath) && filesize($videoPath) > 0) {
-                // Limpiar archivos de imágenes
-                foreach ($imageFiles as $pngFile) {
-                    if (is_file($pngFile)) unlink($pngFile);
-                }
-
-                $_SESSION['download_video_path'] = $videoPath;
-                $_SESSION['download_video_filename'] = basename($videoPath);
-
-                http_response_code(200);
-                echo json_encode([
-                    'success' => true,
-                    'redirectUrl' => $this->getBaseUrl() . '/markdown/download-video-page'
-                ]);
-                exit;
-            } else {
-                $logger->error("FFmpeg pareció tener éxito, pero el archivo de video no se encontró o está vacío.", ['videoPath' => $videoPath]);
-                http_response_code(500);
-                echo json_encode(['success' => false, 'error' => 'Error interno: el archivo de video no se pudo crear.']);
-                exit;
-            }
-        } catch (\FFMpeg\Exception\ExceptionInterface $e) {
-            $logger->error("FFmpeg falló al crear el video.", ['exception' => $e]);
-            http_response_code(500);
-            echo json_encode([
-                'success' => false,
-                'error' => 'La codificación del video falló. Revisa el archivo de registro para más detalles.',
-                'log_file' => $logFile
-            ]);
-            exit;
-        }
-    }
-            '-framerate', strval($inputFramerate),
-            '-i', $imagePattern,
-            '-c:v', 'libx264',
-            '-r', '25',
-            '-pix_fmt', 'yuv420p',
-            $videoPath
-        ]);
-
-        if (file_exists($videoPath) && filesize($videoPath) > 0) {
-            // Limpiar archivos temporales (imágenes PNG)
-            foreach (glob($tempDir . "/*.png") as $pngFile) {
-                unlink($pngFile);
-            }
-            // rmdir($tempDir); // Opcional: eliminar el directorio temporal si está vacío y ya no se necesita
-
-            // Guardar información del video en la sesión para la página de descarga
-            $_SESSION['download_video_path'] = $videoPath;
-            $_SESSION['download_video_filename'] = basename($videoPath);
-
-            // Devolver URL para la página de descarga
-            http_response_code(200);
-            echo json_encode([
-                'success' => true,
-                'redirectUrl' => $this->getBaseUrl() . '/markdown/download-video-page'
-            ]);
-            exit;
 
         } catch (\FFMpeg\Exception\ExceptionInterface $e) {
             // Usamos nuestro logger para guardar el error detallado
@@ -512,21 +421,27 @@ class MarkdownController {
             ]);
             exit;
         }
-    }
 
-    private function showErrorPage(string $logMessage, string $userMessage = "Error."): void { /* ... */ }
+        // 9. Devolver la URL del video si se creó correctamente
+        if (file_exists($videoPath)) {
+            // Limpiar las imágenes PNG que ya no necesitamos
+            foreach ($imageFiles as $file) {
+                unlink($file);
+            }
+            // Limpiar el archivo markdown temporal
+            unlink($markdownFilePath);
 
-    private function renderView(string $viewName, array $data = []): void {
-        $viewPath = VIEWS_PATH . $viewName . '.php';
-        if (file_exists($viewPath)) {
-            extract($data);
-            require_once $viewPath;
+            echo json_encode([
+                'success' => true,
+                'message' => '¡Video generado con éxito!',
+                'videoUrl' => str_replace(ROOT_PATH, '', $videoPath) // Ruta relativa para el frontend
+            ]);
         } else {
-            $this->showErrorPage("Vista no encontrada: " . $viewPath);
+            error_log("El video no fue encontrado en la ruta esperada después de la ejecución de FFmpeg: " . $videoPath);
+            http_response_code(500);
+            echo json_encode(['success' => false, 'error' => 'Error interno: el archivo de video no se pudo crear.']);
         }
-    }
 
-    private function getBaseUrl(): string {
-        return BASE_URL;
+        exit;
     }
 }
