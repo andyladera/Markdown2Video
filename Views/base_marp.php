@@ -49,6 +49,12 @@ echo "</script>\n";
                 <button class="generate-btn" data-format="mp4">Generar Video MP4</button>
                 <button class="generate-btn" data-format="html">Generar HTML</button>
             </div>
+            <div id="video-result-container" class="video-result-container" style="display: none; margin-top: 20px;">
+                <h4>Video Generado</h4>
+                <video id="generated-video" controls width="100%"></video>
+                <br>
+                <a id="download-video-link" class="download-link" href="#" download="presentation.mp4" style="display: inline-block; margin-top: 10px;">Descargar Video</a>
+            </div>
         </div>
     </div>
 

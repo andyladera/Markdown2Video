@@ -7,6 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInit3f093d980b132fa613403bb33731e375
 {
     public static $files = array (
+        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -20,16 +21,26 @@ class ComposerStaticInit3f093d980b132fa613403bb33731e375
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
+            'Symfony\\Contracts\\Service\\' => 26,
+            'Symfony\\Contracts\\Cache\\' => 24,
+            'Symfony\\Component\\VarExporter\\' => 30,
+            'Symfony\\Component\\Process\\' => 26,
+            'Symfony\\Component\\Cache\\' => 24,
             'Svg\\' => 4,
+            'Spatie\\TemporaryDirectory\\' => 26,
             'Sabberworm\\CSS\\' => 15,
         ),
         'P' => 
         array (
+            'Psr\\Log\\' => 8,
+            'Psr\\Container\\' => 14,
+            'Psr\\Cache\\' => 10,
             'PhpParser\\' => 10,
             'PhpOption\\' => 10,
         ),
         'M' => 
         array (
+            'Monolog\\' => 8,
             'Masterminds\\' => 12,
         ),
         'G' => 
@@ -39,6 +50,11 @@ class ComposerStaticInit3f093d980b132fa613403bb33731e375
         'F' => 
         array (
             'FontLib\\' => 8,
+            'FFMpeg\\' => 7,
+        ),
+        'E' => 
+        array (
+            'Evenement\\' => 10,
         ),
         'D' => 
         array (
@@ -46,6 +62,10 @@ class ComposerStaticInit3f093d980b132fa613403bb33731e375
             'Dompdf\\' => 7,
             'DeepCopy\\' => 9,
             'Dales\\Markdown2video\\' => 21,
+        ),
+        'A' => 
+        array (
+            'Alchemy\\BinaryDriver\\' => 21,
         ),
     );
 
@@ -62,13 +82,49 @@ class ComposerStaticInit3f093d980b132fa613403bb33731e375
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
+        'Symfony\\Contracts\\Service\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/service-contracts',
+        ),
+        'Symfony\\Contracts\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/cache-contracts',
+        ),
+        'Symfony\\Component\\VarExporter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/var-exporter',
+        ),
+        'Symfony\\Component\\Process\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/process',
+        ),
+        'Symfony\\Component\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/cache',
+        ),
         'Svg\\' => 
         array (
             0 => __DIR__ . '/..' . '/dompdf/php-svg-lib/src/Svg',
         ),
+        'Spatie\\TemporaryDirectory\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spatie/temporary-directory/src',
+        ),
         'Sabberworm\\CSS\\' => 
         array (
             0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/src',
+        ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/src',
+        ),
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'Psr\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/cache/src',
         ),
         'PhpParser\\' => 
         array (
@@ -77,6 +133,10 @@ class ComposerStaticInit3f093d980b132fa613403bb33731e375
         'PhpOption\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
+        ),
+        'Monolog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
         'Masterminds\\' => 
         array (
@@ -89,6 +149,14 @@ class ComposerStaticInit3f093d980b132fa613403bb33731e375
         'FontLib\\' => 
         array (
             0 => __DIR__ . '/..' . '/dompdf/php-font-lib/src/FontLib',
+        ),
+        'FFMpeg\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-ffmpeg/php-ffmpeg/src/FFMpeg',
+        ),
+        'Evenement\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/evenement/evenement/src',
         ),
         'Dotenv\\' => 
         array (
@@ -105,6 +173,10 @@ class ComposerStaticInit3f093d980b132fa613403bb33731e375
         'Dales\\Markdown2video\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
+        ),
+        'Alchemy\\BinaryDriver\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-ffmpeg/php-ffmpeg/src/Alchemy/BinaryDriver',
         ),
     );
 
@@ -1337,6 +1409,7 @@ class ComposerStaticInit3f093d980b132fa613403bb33731e375
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
         'staabm\\SideEffectsDetector\\SideEffect' => __DIR__ . '/..' . '/staabm/side-effects-detector/lib/SideEffect.php',
         'staabm\\SideEffectsDetector\\SideEffectsDetector' => __DIR__ . '/..' . '/staabm/side-effects-detector/lib/SideEffectsDetector.php',
+        '©' => __DIR__ . '/..' . '/symfony/cache/Traits/ValueWrapper.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

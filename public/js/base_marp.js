@@ -169,14 +169,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 const result = await response.json();
 
                 if (result.success) {
-                    if (result.downloadPageUrl) {
-                        // Redirigir a la página de descarga que proporcionará el archivo
+                    // Si el formato es MP4 y tenemos una URL de video, mostramos el reproductor
+                    if (format === 'mp4' && result.videoUrl) {
+                        const videoContainer = document.getElementById('video-result-container');
+                        const videoPlayer = document.getElementById('generated-video');
+                        const downloadLink = document.getElementById('download-video-link');
+
+                        if (videoContainer && videoPlayer && downloadLink) {
+                            const fullVideoUrl = baseUrl + result.videoUrl;
+                            videoPlayer.src = fullVideoUrl;
+                            downloadLink.href = fullVideoUrl;
+                            videoContainer.style.display = 'block';
+                            videoPlayer.load(); // Cargar el nuevo video
+                            alert('¡Video generado con éxito!');
+                        } else {
+                            console.error('No se encontraron los elementos del reproductor de video.');
+                            alert('¡Video generado! No se pudo mostrar el reproductor, pero puedes intentar recargar.');
+                        }
+                    } else if (result.downloadPageUrl) {
+                        // Para otros formatos como PDF, redirigir a la página de descarga
                         window.location.href = baseUrl + result.downloadPageUrl;
                     } else if (result.message) {
-                        alert(result.message); // Para formatos que no tienen descarga directa (ej. solo mensaje de éxito)
+                        // Para mensajes genéricos de éxito
+                        alert(result.message);
                     }
                 } else {
-                    throw new Error(result.error || 'Falló la generación del archivo.');
+                    // Si la respuesta del servidor indica un fallo
+                    const errorMessage = result.debug ? `${result.error}\n\nDEBUG: ${result.debug}` : result.error;
+                    throw new Error(errorMessage || 'Falló la generación del archivo.');
                 }
 
             } catch (error) {

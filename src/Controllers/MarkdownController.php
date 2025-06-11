@@ -2,8 +2,13 @@
 namespace Dales\Markdown2video\Controllers;
 
 use PDO;
-use Dompdf\Dompdf;     
-use Dompdf\Options;  
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use FFMpeg\FFMpeg;
+use FFMpeg\Format\Video\X264;
+use FFMpeg\Coordinate\FrameRate;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class MarkdownController {
     private ?PDO $pdo;
@@ -314,8 +319,6 @@ class MarkdownController {
             $marpCliPath .= '.cmd'; // En Windows, se usa el script .cmd
         }
 
-
-        
         // Guardar el directorio actual y cambiar al temporal para que Marp funcione de forma predecible
         $original_cwd = getcwd();
         chdir($tempDir);
@@ -362,12 +365,83 @@ class MarkdownController {
             exit;
         }
 
-        // Por ahora, solo devolvemos éxito y la cantidad de imágenes
-        echo json_encode([
-            'success' => true, 
-            'message' => "Paso 3 completado: Se generaron {$imageCount} imágenes.",
-            'image_path' => str_replace(ROOT_PATH, '', $tempDir) // Ruta relativa para información
-        ]);
+        // 6. Configurar el logger para FFmpeg
+        // Usar el directorio temporal del sistema para evitar problemas de permisos.
+        $logFile = sys_get_temp_dir() . '/ffmpeg.log';
+        // Limpiar el log anterior en cada ejecución para tener información fresca.
+        if (file_exists($logFile)) { unlink($logFile); }
+        $logger = new Logger('ffmpeg');
+        $logger->pushHandler(new StreamHandler($logFile, Logger::DEBUG));
+
+        // 7. Instanciar FFmpeg con las rutas y el logger
+        $ffmpeg = FFMpeg::create([
+            'ffmpeg.binaries'  => 'C:/ffmpeg/bin/ffmpeg.exe',
+            'ffprobe.binaries' => 'C:/ffmpeg/bin/ffprobe.exe',
+            'timeout'          => 3600, // Tiempo máximo de espera para el proceso
+            'ffmpeg.threads'   => 12,   // Hilos a usar por FFMpeg
+        ], $logger);
+
+        // 8. Preparar para la creación del video
+        $videoPath = $tempDir . '/output.mp4';
+        $durationPerSlide = 3; // 3 segundos por diapositiva
+        $inputFramerate = 1 / $durationPerSlide;
+
+        // El patrón de las imágenes generadas por Marp es 'input.001.png', etc.
+        $imagePattern = $tempDir . '/input.%03d.png';
+
+        try {
+            // La API de alto nivel de php-ffmpeg (open, openAdvanced) tiene problemas para establecer
+            // el framerate de entrada para secuencias de imágenes, que es la única forma de controlar
+            // la duración de cada diapositiva.
+            // La solución más robusta es usar el 'driver' de bajo nivel para construir y ejecutar
+            // el comando de FFmpeg directamente, dándonos control total sobre los parámetros.
+
+            $ffmpeg->getFFMpegDriver()->command([
+                '-framerate', strval($inputFramerate), // Opción de ENTRADA: duración de cada imagen
+                '-i', $imagePattern,                   // Archivos de entrada
+                '-c:v', 'libx264',                     // Codec de video
+                '-r', '25',                            // Opción de SALIDA: framerate del video final
+                '-pix_fmt', 'yuv420p',                 // Formato de píxeles para máxima compatibilidad
+                $videoPath                             // Archivo de salida
+            ]);
+
+        } catch (\FFMpeg\Exception\ExceptionInterface $e) {
+            // Usamos nuestro logger para guardar el error detallado
+            if (isset($logger)) {
+                $logger->error("FFmpeg falló al crear el video.", ['exception' => $e]);
+            } else {
+                error_log("FFmpeg falló al crear el video: " . $e->getMessage() . "\n" . $e->getTraceAsString());
+            }
+            
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'error' => 'La codificación del video falló. Revisa el archivo de registro para más detalles.',
+                'log_file' => $logFile // Devolver la ruta completa al archivo de log
+            ]);
+            exit;
+        }
+
+        // 9. Devolver la URL del video si se creó correctamente
+        if (file_exists($videoPath)) {
+            // Limpiar las imágenes PNG que ya no necesitamos
+            foreach ($imageFiles as $file) {
+                unlink($file);
+            }
+            // Limpiar el archivo markdown temporal
+            unlink($markdownFilePath);
+
+            echo json_encode([
+                'success' => true,
+                'message' => '¡Video generado con éxito!',
+                'videoUrl' => str_replace(ROOT_PATH, '', $videoPath) // Ruta relativa para el frontend
+            ]);
+        } else {
+            error_log("El video no fue encontrado en la ruta esperada después de la ejecución de FFmpeg: " . $videoPath);
+            http_response_code(500);
+            echo json_encode(['success' => false, 'error' => 'Error interno: el archivo de video no se pudo crear.']);
+        }
+
         exit;
     }
 }
